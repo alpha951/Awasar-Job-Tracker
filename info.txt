@@ -1,0 +1,1 @@
+We are using cloudinary for hosting images and other media assests.
