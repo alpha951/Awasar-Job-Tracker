@@ -1,1 +1,2 @@
 We are using cloudinary for hosting images and other media assests.
+Version 2 deployed with MVC on vercel.
