@@ -43,6 +43,7 @@ Push to the branch: git push origin my-new-feature
 Submit a pull request
 
 # Future Features
+- [ ] Implement pagination on ```all-jobs``` page.
 - [ ] Add a Job Link to the Job model and display it on the Job page.
 - [ ] Add a Notes field to the Job model and display it on the Job page.
 - [ ] Add a cron Job to auto delete Jobs older than 100 days.
