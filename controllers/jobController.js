@@ -25,7 +25,6 @@ const addJob = async function (req, res) {
     await user.save();
     newJob.username = user.username;
     await newJob.save();
-    // res.render("all-jobs", { filled: { status: "All", jobType: "All" } });
     res.redirect("/jobs/all-jobs");
   } else {
     console.log("failed adding jobs");
@@ -36,16 +35,6 @@ const addJob = async function (req, res) {
 
 // TODO  not working, need to fix
 
-// const editJob = async function (req, res) {
-//   const idToEdit = req.params._id;
-//   const updatedData = req.body;
-
-//   if (updatedData.date == "") updatedData.date = Date;
-//   else updatedData.date = getDate(updatedData.date);
-
-//   await Job.updateOne({ _id: idToEdit }, updatedData);
-//   res.redirect("/jobs/all-jobs");
-// };
 
 const editJob = async function (req, res) {
   const idToEdit = req.params._id;
