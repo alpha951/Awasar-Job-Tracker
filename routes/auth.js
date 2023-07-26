@@ -20,7 +20,7 @@ router
 
 router.route("/login").post(
   passport.authenticate("local", {
-    successRedirect: "http://localhost:3000/jobs/stats",
+    successRedirect: "http://awasar.vercel.app/jobs/stats",
     failureRedirect: "/",
     session: true,
   })
