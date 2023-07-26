@@ -19,7 +19,7 @@ const {
 } = require("../controllers/viewController");
 
 router.route("/add-job").post(addJob);
-router.route("/edit-job/:id").post(editJob);
+router.route("/edit-job/:_id").post(editJob);
 router.route("/delete/:_id").get(deleteJob);
 
 // profile update

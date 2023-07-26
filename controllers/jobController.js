@@ -33,45 +33,69 @@ const addJob = async function (req, res) {
   }
 };
 
+
+// TODO  not working, need to fix
+
+// const editJob = async function (req, res) {
+//   const idToEdit = req.params._id;
+//   const updatedData = req.body;
+
+//   if (updatedData.date == "") updatedData.date = Date;
+//   else updatedData.date = getDate(updatedData.date);
+
+//   await Job.updateOne({ _id: idToEdit }, updatedData);
+//   res.redirect("/jobs/all-jobs");
+// };
+
 const editJob = async function (req, res) {
   const idToEdit = req.params._id;
+  console.log("idToEdit is ", idToEdit);
   const updatedData = req.body;
 
-  if (updatedData.date == "") updatedData.date = Date;
-  else updatedData.date = getDate(updatedData.date);
+  if (updatedData.date == "") updatedData.date = new Date().toISOString();
+  updatedData.date = getDate(updatedData.date);
 
-  // Job.updateOne({ _id: idToEdit }, updatedData, (err) => {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     User.updateOne(
-  //       { username: req.user.username, "jobs._id": idToEdit },
-  //       {
-  //         $set: {
-  //           "jobs.$.position": updatedData.position,
-  //           "jobs.$.company": updatedData.company,
-  //           "jobs.$.jobLocation": updatedData.jobLocation,
-  //           "jobs.$.status": updatedData.status,
-  //           "jobs.$.jobType": updatedData.jobType,
-  //           "jobs.$.date": updatedData.date,
-  //         },
-  //       },
-  //       (err) => {
-  //         if (err) {
-  //           console.log(err);
-  //         } else {
-  //           res.redirect("/jobs/all-jobs");
-  //         }
-  //       }
-  //     );
-  //   }
-  // });
-  await Job.findOneAndUpdate({ _id: idToEdit }, updatedData, {
-    new: true,
-    runValidators: true,
-  });
-  res.redirect("/jobs/all-jobs");
+  try {
+    console.log(updatedData);
+
+    const updatedJob = await Job.findOneAndUpdate(
+      { _id: mongoose.Types.ObjectId(idToEdit) },
+      updatedData,
+      { new: true }
+    );
+
+    if (!updatedJob) {
+      console.log(updatedJob, "Couldn't update the job, job not found");
+      res.redirect("/jobs/all-jobs");
+    }
+
+    const user = await User.findOne({
+      username: req.user.username,
+      "jobs._id": idToEdit,
+    });
+
+    if (!user) {
+      console.log("User not found");
+      res.redirect("/jobs/all-jobs");
+    }
+
+    const jobToUpdateIndex = user.jobs.findIndex(
+      (job) => job._id.toString() === idToEdit
+    );
+    if (jobToUpdateIndex !== -1) {
+      user.jobs[jobToUpdateIndex] = updatedJob;
+    }
+
+    await user.save();
+
+    res.redirect("/jobs/all-jobs");
+  } catch (err) {
+    // Handle any errors that occurred during the update process
+    console.error("Error updating job:", err);
+    res.redirect("/jobs/all-jobs");
+  }
 };
+
 
 const deleteJob = async function (req, res) {
   const idToDelete = req.params._id;
