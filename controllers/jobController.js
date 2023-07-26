@@ -33,9 +33,6 @@ const addJob = async function (req, res) {
 };
 
 
-// TODO  not working, need to fix
-
-
 const editJob = async function (req, res) {
   const idToEdit = req.params._id;
   console.log("idToEdit is ", idToEdit);
