@@ -9,10 +9,12 @@ const routes = require("./routes/index");
 
 const bodyParser = require("body-parser");
 const compression = require("compression");
+const morgan = require("morgan");
 
 const { configurePassport } = require("./config/passport");
 configurePassport(app);
 
+app.use(morgan("dev")); //use morgan to log requests to the console
 app.use(compression()); //use compression
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));

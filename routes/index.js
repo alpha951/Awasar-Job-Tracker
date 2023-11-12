@@ -1,12 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
-
 const authRouter = require("./auth");
 const jobRouter = require("./job");
 const { authMiddleware } = require("../middleware");
-
-console.log("Hitting at routes/index.js");
 
 router.route("/").get((req, res) => {
   res.render("landing");
