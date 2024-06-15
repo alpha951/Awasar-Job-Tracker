@@ -24,7 +24,7 @@ app.set("view engine", "ejs");
 
 app.use("/", routes);
 // start server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 const start = async () => {
   try {
